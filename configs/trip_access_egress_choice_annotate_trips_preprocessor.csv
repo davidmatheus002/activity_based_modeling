@@ -1,0 +1,25 @@
+Description,Target,Expression
+# https://stackoverflow.com/questions/21415661/logical-operators-for-boolean-indexing-in-pandas,,
+,_ENABLE_MAAS,setting('enable_maas')
+,_USE_HUBS, setting('USE_HUBS')
+,_fake_zone_nr, 239 if setting('DELFT_AREA') else 7787
+,_private_car_high_priority, setting('PRIVATE_CAR_HIGH_PRIORITY')
+can use private car, _use_private_car, (df.driving_license>0) & (df.has_car>0) & _private_car_high_priority
+determine to use car share LOS or normal LOS, can_use_carshare, (df.driving_license>0) & (df.maas_subscription>0) & _ENABLE_MAAS & (~_use_private_car)
+use CP with shared car when HH having no car,can_use_cpshare, (df.auto_ownership==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use bike share LOS or normal LOS,can_use_bikeshare, (df.has_bike==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use ebike share LOS or normal LOS,can_use_ebikeshare, (df.has_ebike==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use DRT LOS,can_use_drt, (df.maas_subscription>0) & _ENABLE_MAAS
+hub auto fiets,hubAutoFiets,od_skims['HUBS_AUTOFIETS'] if _USE_HUBS else _fake_zone_nr
+hub Fiets auto,hubFietsAuto,od_skims['HUBS_FIETSAUTO'] if _USE_HUBS else _fake_zone_nr
+hub auto ebike, hubAutoEbike,od_skims['HUBS_AUTOMICRO25'] if _USE_HUBS else _fake_zone_nr
+hub Ebike auto,hubEbikeAuto,od_skims['HUBS_MICRO25AUTO'] if _USE_HUBS else _fake_zone_nr
+hub auto OV,hubAutoOv,od_skims['HUBS_AUTOOV'] if _USE_HUBS else _fake_zone_nr
+hub OV auto,hubOvAuto,od_skims['HUBS_OVAUTO'] if _USE_HUBS else _fake_zone_nr
+# PARKING at destination, assume no parking cost at hubs
+duration 0 means the activity happend in the same hour,_duration,"np.where((df.duration < 1), 1, df.duration)"
+,_dest_hourly_parking_cost,"reindex(land_use.ParkingCostHourly, df[dest_col_name])"
+,parking_cost,_dest_hourly_parking_cost * _duration * setting('parking_factor')
+,free_parking_cap,"reindex(land_use.FreeParkingCapacity, df[dest_col_name])"
+,activity_type,df.purpose.map(ACTIVITY_TYPE_MAPPING)
+,beta_tt_ebike, b_tt_micro25_ac_23 * (activity_type<=3) + b_tt_micro25_ac_47 * (activity_type==4) + b_tt_micro25_ac_5 * (activity_type==5) + b_tt_micro25_ac_6 * (activity_type==6) + b_tt_micro25_ac_47 * (activity_type==7)

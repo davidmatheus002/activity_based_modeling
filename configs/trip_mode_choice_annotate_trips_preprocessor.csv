@@ -1,0 +1,100 @@
+Description,Target,Expression
+,_ENABLE_MAAS,setting('enable_maas')
+,_private_car_high_priority, setting('PRIVATE_CAR_HIGH_PRIORITY')
+can use private car, _use_private_car, (df.driving_license>0) & (df.has_car>0) & _private_car_high_priority
+determine to use car share LOS or normal LOS, can_use_carshare, (df.driving_license>0) & (df.maas_subscription>0) & _ENABLE_MAAS & (~_use_private_car)
+determine to use CP share LOS or normal LOS,can_use_cpshare, (df.auto_ownership==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use bike share LOS or normal LOS,can_use_bikeshare, (df.has_bike==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use ebike share LOS or normal LOS,can_use_ebikeshare, (df.has_ebike==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use DRT share LOS,can_use_drt, (df.maas_subscription>0) & _ENABLE_MAAS
+,is_joint,(df.number_of_participants > 1)
+,is_indiv,(df.number_of_participants == 1)
+"when MaaS does not matter if it is a subtour",is_atwork_subtour,~df.parent_tour_id.isnull() & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+#,c_cost_car,C_IVT_CAR/VOT_CAR * setting('MAAS_CAR_COST_PERCENT')
+#,c_cost_cpshr,C_IVT_CP/VOT_CP * setting('MAAS_CP_COST_PERCENT')
+#,c_cost_bikeshr,C_IVT_BIKE/VOT_BIKE * setting('MAAS_BIKE_COST_PERCENT')
+#,c_cost_ebikeshr,C_IVT_EBIKE/VOT_EBIKE * setting('MAAS_EBIKE_COST_PERCENT')
+#,c_cost_drt,C_IVT_DRT/VOT_DRT * setting('MAAS_DRT_COST_PERCENT')
+#,c_cost_pt,C_IVT_PT/VOT_PT * setting('MAAS_PT_COST_PERCENT')
+#atwork subtours,,
+# valid when MaaS is NOT enabled,,
+,parent_tour_mode,"reindex(tours.tour_mode, df.parent_tour_id).fillna('')"
+,work_tour_is_SOV,(parent_tour_mode=='CAR')
+,work_tour_is_bike,(parent_tour_mode=='BIKE')
+,work_tour_is_ebike,(parent_tour_mode=='EBIKE')
+,i_tour_mode,df.tour_mode.map(I_MODE_MAP)
+,tour_mode_is_SOV,(i_tour_mode.isin(I_SOV_MODES))  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+,tour_mode_is_auto,(i_tour_mode.isin(I_AUTO_MODES))  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+,tour_mode_is_walk,(i_tour_mode == I_WALK_MODE)  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+,tour_mode_is_bike,(i_tour_mode == I_BIKE_MODE)  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+,tour_mode_is_ebike,(i_tour_mode == I_EBIKE_MODE)  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+,tour_mode_is_walk_transit,(i_tour_mode.isin(I_WALK_TRANSIT_MODES))  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+,tour_mode_is_drt,(i_tour_mode.isin(I_SR3P_MODES))  & ~(df.maas_subscription>0 & _ENABLE_MAAS)
+#,,
+# FIXME,free_parking_available,0
+,inbound,~df.outbound
+,first_trip,df.trip_num == 1
+,last_trip,df.trip_num == df.trip_count
+origin terminal time not counted at home,_origin_terminal_time,"np.where(df.outbound & first_trip, 0, reindex(land_use.TERMINAL, df[ORIGIN]))"
+dest terminal time not counted at home,_dest_terminal_time,"np.where(inbound & last_trip, 0, reindex(land_use.TERMINAL, df[DESTINATION]))"
+,total_terminal_time,_origin_terminal_time + _dest_terminal_time
+#FIXME,origin_hourly_parking_cost,0
+#FIXME,dest_hourly_parking_cost,0
+#tourDuration,,
+#,origin_duration,"np.where(first_trip, np.where(inbound,df.duration * ~free_parking_available,0), 1)"
+#,dest_duration,"np.where(last_trip, np.where(inbound, df.duration * ~free_parking_available, 0), 1)"
+#,origin_parking_cost,origin_duration*origin_hourly_parking_cost
+#,dest_parking_cost,dest_duration*dest_hourly_parking_cost
+#,total_parking_cost,(origin_parking_cost + dest_parking_cost) / 2.0
+# PARKING
+duration 0 means the activity happend in the same hour,_duration,"np.where((df.duration < 1), 1, df.duration)"
+,_orig_duration,"np.where(first_trip, np.where(inbound,_duration, 0), 1)"
+,_dest_duration,"np.where(last_trip, np.where(inbound, _duration, 0), 1)"
+,_orig_hourly_parking_cost,"reindex(land_use.ParkingCostHourly, df[orig_col_name])"
+,_dest_hourly_parking_cost,"reindex(land_use.ParkingCostHourly, df[dest_col_name])"
+,parking_cost,(_orig_hourly_parking_cost * _orig_duration + _dest_hourly_parking_cost * _dest_duration) * setting('parking_factor') * 0.5
+,free_parking_cap,"reindex(land_use.FreeParkingCapacity,df[dest_col_name])"
+,trip_topology,"np.where(df.outbound, reindex(land_use.TOPOLOGY, df[DESTINATION]), reindex(land_use.TOPOLOGY, df[ORIGIN]))"
+,density_index,"np.where(df.outbound, reindex(land_use.density_index, df[DESTINATION]), reindex(land_use.density_index, df[ORIGIN]))"
+,origin_density_index,"np.where(df.outbound, reindex(land_use.density_index, df[ORIGIN]), reindex(land_use.density_index, df[DESTINATION]))"
+,activity_type,df.purpose.map(ACTIVITY_TYPE_MAPPING)
+,beta_tt_ebike, b_tt_micro25_ac_23 * (activity_type<=3) + b_tt_micro25_ac_47 * (activity_type==4) + b_tt_micro25_ac_5 * (activity_type==5) + b_tt_micro25_ac_6 * (activity_type==6) + b_tt_micro25_ac_47 * (activity_type==7)
+#,,
+FIXME,_walk_transit_origin,1
+FIXME,_walk_transit_destination,1
+,walk_transit_available,_walk_transit_origin & _walk_transit_destination
+#FIXME should you be able to drive to transit if you drove to transit on a previous trip?,,
+,drive_transit_available,"np.where(df.outbound, _walk_transit_destination, _walk_transit_origin) & (df.auto_ownership > 0)"
+FIXME,_short_walk_origin,1
+FIXME,_short_walk_destination,1
+#walk_times were off by 2 in UEC because cut and pasted from tour mode choice,,
+,origin_walk_time,"np.where(_short_walk_origin,0.5*shortWalk*60/walkSpeed, (shortWalk + 0.5*(longWalk-shortWalk))*60/walkSpeed)"
+,destination_walk_time,"np.where(_short_walk_destination,0.5*shortWalk*60/walkSpeed, (shortWalk + 0.5*(longWalk-shortWalk))*60/walkSpeed)"
+#,,
+# ,sov_available,odt_skims['PRIVE_NIETGEDEELD_TIME']>0
+# ,hov2_available,odt_skims['PRIVE_NIETGEDEELD_TIME']>0
+# ,hov3_available,odt_skims['PRIVE_NIETGEDEELD_TIME']>0
+# ,walk_local_available,walk_transit_available & (odt_skims['GEDEELDTRADITIONEEL_LOPENLOPEN_GEDEELD_TIME']>0)
+#,walk_lrf_available,walk_transit_available & (i_tour_mode >= 10) & (odt_skims['WLK_LRF_WLK_KEYIVT']>0)
+#,walk_express_available,walk_transit_available & (i_tour_mode >= 11) & (odt_skims['WLK_EXP_WLK_KEYIVT']>0)
+#,walk_heavyrail_available,walk_transit_available & (i_tour_mode >= 12) & (odt_skims['WLK_HVY_WLK_KEYIVT']>0)
+#,walk_commuter_available,walk_transit_available & (i_tour_mode >= 13) & (odt_skims['WLK_COM_WLK_KEYIVT']>0)
+#,drive_local_available_outbound,drive_transit_available & (odt_skims['DRV_LOC_WLK_TOTIVT']>0)
+#,drive_local_available_inbound,drive_transit_available & (odt_skims['WLK_LOC_DRV_TOTIVT']>0)
+#,drive_lrf_available_outbound,drive_transit_available & (i_tour_mode >= 15) & (odt_skims['DRV_LRF_WLK_KEYIVT']>0)
+#,drive_lrf_available_inbound,drive_transit_available & (i_tour_mode >= 15) & (odt_skims['WLK_LRF_DRV_KEYIVT']>0)
+#,drive_express_available_outbound,drive_transit_available & (i_tour_mode >= 16) & (odt_skims['DRV_EXP_WLK_KEYIVT']>0)
+#,drive_express_available_inbound,drive_transit_available & (i_tour_mode >= 16) & (odt_skims['WLK_EXP_DRV_KEYIVT']>0)
+#,drive_heavyrail_available_outbound,drive_transit_available & (i_tour_mode >= 17) & (odt_skims['DRV_HVY_WLK_KEYIVT']>0)
+#,drive_heavyrail_available_inbound,drive_transit_available & (i_tour_mode >= 17) & (odt_skims['WLK_HVY_DRV_KEYIVT']>0)
+#,drive_commuter_available_outbound,drive_transit_available & (i_tour_mode >= 18) & (odt_skims['DRV_COM_WLK_KEYIVT']>0)
+#,drive_commuter_available_inbound,drive_transit_available & (i_tour_mode >= 18) & (odt_skims['WLK_COM_DRV_KEYIVT']>0)
+#,walk_ferry_available,walk_lrf_available  & (odt_skims['WLK_LRF_WLK_FERRYIVT']>0)
+#,_drive_ferry_available_outbound,drive_lrf_available_outbound & (odt_skims['DRV_LRF_WLK_FERRYIVT']>0)
+#,_drive_ferry_available_inbound,drive_lrf_available_inbound & (odt_skims['WLK_LRF_DRV_FERRYIVT']>0)
+#,drive_ferry_available,"np.where(df.outbound, _drive_ferry_available_outbound, _drive_ferry_available_inbound)"
+#,od_dist_walk,od_skims['MICRO5_NIETGEDEELD_DIST']
+#,do_dist_walk,od_skims.reverse('MICRO5_NIETGEDEELD_DIST')
+#,max_dist_walk,od_skims.max('MICRO5_NIETGEDEELD_DIST')
+#,dist_bike,od_skims['MICRO15_NIETGEDEELD_DIST']
+#,dist_only,od_skims['PRIVE_NIETGEDEELD_DIST']

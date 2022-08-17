@@ -1,0 +1,46 @@
+Description,Target,Expression
+local,_DF_IS_TOUR,'tour_type' in df.columns
+,activity_type,df.tour_type.map(ACTIVITY_TYPE_MAPPING) if _DF_IS_TOUR else df.activity_type
+,beta_tt_ebike, b_tt_micro25_ac_23 * (activity_type<=3) + b_tt_micro25_ac_47 * (activity_type==4) + b_tt_micro25_ac_5 * (activity_type==5) + b_tt_micro25_ac_6 * (activity_type==6) + b_tt_micro25_ac_47 * (activity_type==7)
+,free_parking_cap,"reindex(land_use.FreeParkingCapacity,df[dest_col_name])"
+,_ENABLE_MAAS,setting('enable_maas')
+,_private_car_high_priority,setting('PRIVATE_CAR_HIGH_PRIORITY')
+can use private car, _use_private_car, (df.driving_license>0) & (df.has_car>0) & _private_car_high_priority
+determine to use car share LOS or normal LOS, can_use_carshare, (df.driving_license>0) & (df.maas_subscription>0) & _ENABLE_MAAS & (~_use_private_car)
+determine to use CP share LOS or normal LOS, can_use_cpshare, (df.auto_ownership==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use bike share LOS or normal LOS, can_use_bikeshare, (df.has_bike==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use ebike share LOS or normal LOS, can_use_ebikeshare, (df.has_ebike==0) & (df.maas_subscription>0) & _ENABLE_MAAS
+determine to use DRT share LOS, can_use_drt, (df.maas_subscription>0) & _ENABLE_MAAS
+,number_of_participants,df.number_of_participants if _DF_IS_TOUR else 1
+,is_joint,(df.tour_category=='joint') if _DF_IS_TOUR else False
+#,,
+local,_HAVE_PARENT_TOURS,'parent_tour_id' in df.columns
+,_parent_tour_mode,"reindex(tours.tour_mode, df.parent_tour_id) if _HAVE_PARENT_TOURS else ''"
+,work_tour_is_bike,_parent_tour_mode=='BIKE'
+,work_tour_is_ebike,_parent_tour_mode=='EBIKE'
+,work_tour_is_SOV,"_parent_tour_mode.isin(['CAR','CARSHR'])"
+#,,
+,is_joint,(df.tour_category=='joint') if 'tour_category' in df.columns else False
+,is_indiv,~is_joint
+,is_atwork_subtour,(df.tour_category=='joint') if 'tour_category' in df.columns else False
+when MaaS does not matter if it is a subtour,is_atwork_subtour, is_atwork_subtour & (~((df.maas_subscription>0) & _ENABLE_MAAS))
+# PARKING
+duration 0 means the activity happend in the same hour,_duration,"np.where((df.duration < 1), 1, df.duration)"
+,_dest_hourly_parking_cost,"reindex(land_use.ParkingCostHourly,df[dest_col_name])"
+#,daily_parking_cost,_dest_hourly_parking_cost * _duration * setting('parking_factor')
+,parking_cost,_dest_hourly_parking_cost * _duration * setting('parking_factor')
+#,c_cost_car,C_IVT_CAR/VOT_CAR * setting('MAAS_CAR_COST_PERCENT')
+#,c_cost_cpshr,C_IVT_CP/VOT_CP * setting('MAAS_CP_COST_PERCENT')
+#,c_cost_bikeshr,C_IVT_BIKE/VOT_BIKE * setting('MAAS_BIKE_COST_PERCENT')
+#,c_cost_ebikeshr,C_IVT_EBIKE/VOT_EBIKE * setting('MAAS_EBIKE_COST_PERCENT')
+#,c_cost_drt,C_IVT_DRT/VOT_DRT * setting('MAAS_DRT_COST_PERCENT')
+#,c_cost_pt,C_IVT_PT/VOT_PT * setting('MAAS_PT_COST_PERCENT')
+#,,
+,dest_topology,"reindex(land_use.TOPOLOGY, df[dest_col_name])"
+,terminal_time,"reindex(land_use.TERMINAL, df[dest_col_name])"
+,dest_density_index,"reindex(land_use.density_index, df[dest_col_name])"
+FIXME,origin_walk_time,0
+FIXME,destination_walk_time,0
+FIXME,daily_parking_cost,0
+,distance,od_skims['PRIVE_NIETGEDEELD_DIST']
+destination in central business district,destination_in_cbd,"(reindex(land_use.area_type, df[dest_col_name]) < setting('cbd_threshold')) * 1"

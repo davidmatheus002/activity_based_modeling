@@ -1,0 +1,52 @@
+INDIV_AND_HHSIZE1_SPEC: cdap_indiv_and_hhsize1.csv
+COEFFICIENTS: cdap_coefficients.csv
+INTERACTION_COEFFICIENTS: cdap_interaction_coefficients.csv
+
+FIXED_RELATIVE_PROPORTIONS_SPEC: cdap_fixed_relative_proportions.csv
+
+CONSTANTS:
+  FULL: 1
+  PART: 2
+  UNIVERSITY: 3
+  NONWORK: 4
+  RETIRED: 5
+  DRIVING: 6
+  SCHOOL: 7
+  PRESCHOOL: 8
+
+PERSON_TYPE_MAP:
+  WORKER:
+    - 1
+    - 2
+  CHILD:
+    - 6
+    - 7
+    - 8
+
+annotate_persons:
+  SPEC: annotate_persons_cdap
+  DF: persons
+
+
+annotate_households:
+  SPEC: annotate_households_cdap
+  DF: households
+  TABLES:
+    - persons
+
+CHOICES: [M,N,H]
+ALL: HMN
+# when run in CPU, we simulate CPU Intel MKL using cuBLAS with such times slower
+BLAS_ITERATIONS: 1
+
+# when test computation time with relation to # of expressions, we simply copy the expressions so many times
+# Do NOT forget to double/trip the expressions in the CSV file
+EXPRESSION_ITERATIONS: 1
+
+USE_GPU_CDAP: 0
+
+
+# This is added by David because ActivitySim expects that if hhsize>1
+# then all persons in the household should have data, but ODiN does not
+# not have that. Ignored when running simulation instead of estimation.
+IGNORE_HHSIZE: True

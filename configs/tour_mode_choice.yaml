@@ -1,0 +1,257 @@
+﻿# SPEC: tour_mode_choice_DRTasPT.csv
+SPEC: tour_mode_choice.csv
+LEGACY_COEFFICIENTS: tour_mode_choice_coeffs_legacy.csv
+COEFFICIENTS: tour_mode_choice_coeffs.csv
+COEFFICIENT_TEMPLATE: tour_mode_choice_coefficients_template.csv
+
+LOGIT_TYPE: MNL
+alternatives:
+  - [CAR, 1, 1]       # synonyms: Private, ownership_required, allowance
+  - [CP, 0, 1]        # Car passenger
+  - [BIKE, 1, 1]      # synonyms: Micro modality 15km/h
+  - [EBIKE,1, 1]      # synonyms: micro modality 25km/h (ebike, escooter)
+  - [DRT,1,1]         # synonyms: on-demand shared mobility (minibus,taxi, vans)
+  - [WALK_PT_WALK, 1,1] # synonyms: fixed schedule shared mobility
+  - [WALK, 0, 1]      # synonyms: Micro modality 5km/h
+
+
+CONSTANTS:
+  costPerMile: 30  # dollor cent/miles,  0.17 euro/km
+  costShareSr2: 1.75
+  costShareSr3: 2.50
+  waitThresh: 10.00
+  walkThresh: 1.50
+  shortWalk: 0.333
+  longWalk: 0.667
+  walkSpeed: 3.00    # mph
+  bikeThresh: 6.00
+  bikeSpeed: 9.00
+  maxCbdAreaTypeThresh: 2
+  indivTour: 1.00000
+  upperEA: 5
+  upperAM: 10
+  upperMD: 15
+  upperPM: 19
+  ebikeThresh: 10.00 # miles
+  ebikeSpeed: 15.00  # mph
+  accessShrServiceTimeThresh: 20
+  VOT_CAR: 0.1685  # 9 euro/H -> 0.15 euro/min -> 0.1685 dollar/min
+  VOT_CP:  0.135   # 7.2euro/h
+  VOT_PT:  0.126  # 6.75 Euro/h
+  VOT_BIKE: 0.1685  # 9 euro/H
+  VOT_EBIKE: 0.1685  # 9 euro/H
+  VOT_WALK: 0.1685  # 9 euro/H
+  VOT_DRT: 0.135   # 6.75 Euro/h   0.135 # 7.2 euro/h from CP, 0.126 from PT
+  C_IVT_CAR: -0.03
+  C_IVT_CP: -0.0222
+  C_IVT_BIKE: -0.0618
+  C_IVT_EBIKE: -0.0618
+  C_IVT_DRT: -0.0222  # -0.0222 # from CP , -0.00959 from PT
+  C_IVT_WALK: -0.0483
+  C_IVT_PT: -0.00959
+  C_IVT_WPTB: -0.0021
+  C_IVT_BPTW: 0.00117
+  C_IVT_BPTB: 0.00534
+  TRANSFER_TIME_CAR_BIKE: 5
+  TRANSFER_TIME_CAR_PT: 8
+  TRANSFER_TIME_PT_BIKE: 10  # 10 min parking time for walk-pt-bike, bike-pt-bike, bike-pt-walk modes
+#  b_activity_type_2_mode_2: 0.4793100922030571
+#  b_activity_type_2_mode_3: 1.2386696142916276
+#  b_activity_type_2_mode_4: 1.451884431236207
+#  b_activity_type_2_mode_5: -0.21863021789777068
+#  b_activity_type_2_mode_6: -2.540829550623564
+#  b_activity_type_2_mode_7: 0.39391959253059877
+#  b_activity_type_3_mode_2: -1.4072024741072668
+#  b_activity_type_3_mode_3: -1.1254802585466241
+#  b_activity_type_3_mode_4: 0.1419102618211679
+#  b_activity_type_3_mode_5: -0.39355321429892876
+#  b_activity_type_3_mode_6: -4.373751499757647
+#  b_activity_type_3_mode_7: -1.037966050924932
+#  b_activity_type_4_mode_2: -0.485541278015725
+#  b_activity_type_4_mode_3: 0.16306287847005588
+#  b_activity_type_4_mode_4: 1.3549084136221592
+#  b_activity_type_4_mode_5: 0.40414359530822463
+#  b_activity_type_4_mode_6: -1.6270349754815714
+#  b_activity_type_4_mode_7: -2.3197077102438066
+#  b_activity_type_6_mode_2: -0.8006835711023137
+#  b_activity_type_6_mode_3: 0.2686025124820123
+#  b_activity_type_6_mode_4: 0.631612691918272
+#  b_activity_type_6_mode_5: 0.46180577417089125
+#  b_activity_type_6_mode_6: -1.9239010510350671
+#  b_activity_type_6_mode_7: -1.1372292343165282
+#  b_activity_type_7_mode_2: -0.6685129106502966
+#  b_activity_type_7_mode_3: 0.15744129839279425
+#  b_activity_type_7_mode_4: 0.6251738968208062
+#  b_activity_type_7_mode_5: 0.7403956971644655
+#  b_activity_type_7_mode_6: -0.6717769588555639
+#  b_activity_type_7_mode_7: -0.9587501296575067
+##  b_age_person_2_mode_2: 0.7093188400600086
+##  b_age_person_2_mode_3: 3.230824843673735
+##  b_age_person_2_mode_5: -1.2820023775242508
+##  b_age_person_2_mode_7: 1.259480040954248
+##  b_age_person_3_mode_3: 2.876135997614781
+##  b_age_person_3_mode_5: -1.3366910307087643
+##  b_age_person_3_mode_7: 0.7216652615153145
+##  b_age_person_4_mode_3: 3.2912807096091448
+##  b_age_person_4_mode_5: -1.3021293533464593
+##  b_age_person_4_mode_7: 0.637631616658776
+##  b_age_person_5_mode_2: -0.42677897295318057
+##  b_age_person_5_mode_3: 3.503989859364642
+##  b_age_person_5_mode_4: -0.057293225137249965
+##  b_age_person_5_mode_5: -1.0929872246079242
+##  b_age_person_5_mode_7: 0.9816731427616796
+#  b_cost: -0.00272970896597294  # cost: -0.0030845711315494293/1.13 to convert us dollor back to euro
+#  b_cte_2: -0.4639359525427031
+#  b_cte_3: -6.479148528237475
+#  b_cte_4: -5.476631586177116
+#  b_cte_5: -3.5326478376987205
+#  b_cte_6: -5.493141323582109
+#  b_cte_7: -4.513957128783176
+#  b_driving_license_mode_5: 0.44882103722904654
+#  b_driving_license_mode_7: 0.5752982538356118
+##  b_education_2_mode_7: 0.5221472717986136
+##  b_education_3_mode_7: 0.5774451712761879
+##  b_education_4_mode_2: 0.36412039030866256
+##  b_education_4_mode_3: -0.4932255561934345
+##  b_education_4_mode_7: 0.732515819956016
+##  b_education_5_mode_7: 0.7911747333334478
+##  b_gender_man_transport_mode_2: 0.04235782156908955
+##  b_gender_man_transport_mode_3: 0.05847245969216872
+##  b_gender_man_transport_mode_4: 0.4462664425938149
+##  b_gender_man_transport_mode_5: -0.4942202359547311
+##  b_gender_man_transport_mode_7: -0.17592804218334226
+##  b_hh_composition_2_mode_2: 0.13909230241297307
+##  b_hh_composition_2_mode_3: 0.30297825285595303
+##  b_hh_composition_2_mode_4: -0.5430354824988735
+##  b_hh_composition_2_mode_5: 0.525093866832866
+##  b_hh_composition_2_mode_7: 0.04793087155855119
+##  b_hh_composition_3_mode_2: 0.19141736596361128
+##  b_hh_composition_3_mode_3: 0.24209483640267027
+##  b_hh_composition_3_mode_4: -0.5853523324960485
+##  b_hh_income_2_mode_2: 0.18546753098312438
+##  b_hh_income_2_mode_3: 0.22578189239175256
+##  b_hh_income_2_mode_5: 0.09071145877306484
+##  b_hh_income_2_mode_7: 0.2165107605527698
+##  b_hh_income_3_mode_2: 0.4458103133170828
+##  b_hh_income_3_mode_3: 0.2799381739831846
+##  b_hh_income_3_mode_4: 0.07481320821646509
+##  b_hh_income_3_mode_5: 0.08861148583381682
+##  b_hh_income_3_mode_7: 0.5397269143106136
+##  b_hh_nr_of_cars_1_mode_2: 0.06856972441913683
+##  b_hh_nr_of_cars_1_mode_3: 0.09475120351597249
+##  b_hh_nr_of_cars_1_mode_4: 3.565782331879512
+##  b_hh_nr_of_cars_1_mode_5: 1.2461114097931445
+##  b_hh_nr_of_cars_1_mode_7: -0.3180867538681748
+##  b_hh_nr_of_cars_2_mode_4: 4.532310439492967
+##  b_hh_nr_of_cars_2_mode_5: 1.725494118534064
+##  b_hh_nr_of_cars_2_mode_7: -0.3674282460964589
+##  b_hh_nr_of_cars_3_mode_4: 4.888277987262946
+##  b_hh_nr_of_cars_3_mode_5: 1.5545223900370535
+##  b_hh_nr_of_cars_3_mode_7: -0.28822262249836345
+#  b_parking_free: 0.0465316861093498
+#  b_parking_tariff_mode_4: -0.001404  # -0.0015865555266363642 / 1.13 to convert dollar to euro
+#  b_parking_tariff_mode_7: 0.0037     # 0.004173228819457482 / 1.13
+##  b_roots_person_2_mode_7: 0.2827037931313193
+##  b_roots_person_3_mode_2: -0.8143573762957419
+##  b_roots_person_3_mode_3: -1.357113249359718
+##  b_roots_person_3_mode_7: 0.42812438466556213
+##  b_student_pt_1_mode_2: -0.5411025434555911
+##  b_student_pt_1_mode_4: -0.8645101181483876
+##  b_student_pt_1_mode_7: 1.0216053014992128
+#  b_tt_gedeeldondemand: -0.001110518393892548
+#  b_tt_gedeeldprive: -0.0009012382950134217
+#  b_tt_gedeeldtraditioneel: -0.0002918034502527697
+#  b_tt_micro15: -0.003863547868457399
+#  b_tt_micro25_ac_23: -0.0012569362430481185
+#  b_tt_micro25_ac_47: -0.001616195464475352
+#  b_tt_micro25_ac_5: -0.0016436889320360134
+#  b_tt_micro25_ac_6: -0.0021448890470815263
+#  b_tt_micro5_ac_2: -0.0031303276631498666
+#  b_tt_micro5_ac_3: -0.004659792951009355
+#  b_tt_micro5_ac_47: -0.0037259176886595686
+#  b_tt_micro5_ac_5: -0.00326497177760181
+#  b_tt_micro5_ac_6: -0.0034175313267888357
+#  b_tt_prive: -0.0008925414146736054
+#  b_urbanized_2_mode_2: 0.22150566166936694
+#  b_urbanized_2_mode_3: 0.30659352237610765
+#  b_urbanized_2_mode_4: 0.17502087505973832
+#  b_urbanized_2_mode_5: 0.1522055307331172
+#  b_urbanized_2_mode_6: 0.7229685837137001
+#  b_urbanized_2_mode_7: -0.0896462329697881
+#  b_urbanized_3_mode_2: 0.07914439147230119
+#  b_urbanized_3_mode_3: 0.44516559528859173
+#  b_urbanized_3_mode_4: -0.20041243082540172
+#  b_urbanized_3_mode_5: -0.14980401478686703
+#  b_urbanized_3_mode_6: -0.06334972621206655
+#  b_urbanized_3_mode_7: -0.4415498645785625
+#  b_urbanized_4_mode_2: 0.1849843487000088
+#  b_urbanized_4_mode_3: 0.31952062695214745
+#  b_urbanized_4_mode_4: 0.010923439233392753
+#  b_urbanized_4_mode_5: -0.15776110773723537
+#  b_urbanized_4_mode_6: 0.7811677251527877
+#  b_urbanized_4_mode_7: -0.331346286398689
+#  b_urbanized_5_mode_2: -0.4980677436175613
+#  b_urbanized_5_mode_3: -0.6222453768367995
+#  b_urbanized_5_mode_4: -0.9321733091487918
+#  b_urbanized_5_mode_5: -1.2234002147854663
+#  b_urbanized_5_mode_6: -6.425281430782603
+#  b_urbanized_5_mode_7: -1.6629580785675608
+  ACTIVITY_TYPE_MAPPING:
+    escort: 4
+    escortkids: 4
+    escortnokid: 4
+    shopping: 6
+    eatout: 7
+    eat: 7
+    othmaint: 7
+    social: 7
+    othdiscr: 7
+    work: 2
+    school: 5
+    univ: 5
+    university: 5
+    home: 1
+
+# so far, we can use the same spec as for non-joint tours
+preprocessor:
+  SPEC: tour_mode_choice_annotate_choosers_preprocessor
+  DF: choosers
+  TABLES:
+    - land_use
+    - tours
+
+nontour_preprocessor:
+  SPEC: tour_mode_choice_annotate_choosers_preprocessor
+  DF: choosers
+  TABLES:
+    - land_use
+
+# to reduce memory needs filter chooser table to these fields
+LOGSUM_CHOOSER_COLUMNS:
+  - tour_type
+  - hhsize
+  - density_index
+  - age
+  - male
+  - income
+  - education
+  - pemploy
+  - roots_person
+  - driving_license
+  - has_car
+  - has_bike
+  - has_ebike
+  - maas_subscription
+  - auto_ownership
+  - number_of_participants
+  - tour_category
+  - num_workers
+  - value_of_time
+  - activity_type
+  - urbanized
+  - student_pt
+  - free_parking_at_work
+
+
+MODE_CHOICE_LOGSUM_COLUMN_NAME: #mode_choice_logsum
+

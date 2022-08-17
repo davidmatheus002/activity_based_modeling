@@ -1,0 +1,91 @@
+Description,Expression,WALK,BIKE,EBIKE,CAR,CP,DRT,WALK_PT_WALK
+# Car or CarShr,,,,,,,,
+travel time OD car minutes,@(odt_skims['PRIVE_NIETGEDEELD_TIME']) * (1 - df.can_use_carshare) * setting('CAR_TT_10_PCT_HIGHER') * setting('CAR_TT_BETA_MORE_SENSITIVE') * b_tt_prive,,,,2,,,
+travel time OD carshr,@(odt_skims['PRIVE_GEDEELD_TIME']) * df.can_use_carshare * setting('SHR_CAR_TT_PCT') * setting('CAR_TT_BETA_MORE_SENSITIVE') * b_tt_prive,,,,2,,,
+Operating cost car,@(odt_skims['PRIVE_NIETGEDEELD_FAR']) * (1 - df.can_use_carshare) * setting('CAR_COST_10_PCT_HIGHER') * setting('CAR_COST_BETA_MORE_SENSITIVE') * b_cost,,,,2,,,
+operating cost carshare,@(odt_skims['PRIVE_GEDEELD_FAR']) * df.can_use_carshare * setting('SHR_CAR_COST_PCT') * setting('CAR_COST_BETA_MORE_SENSITIVE') * b_cost,,,,2,,,
+#car parking cost at destination,@b_parking_tariff_mode_4 * df.parking_cost * (1 - df.can_use_carshare),,,,1,,,
+car parking cost at destination,@df.parking_cost * (1 - df.can_use_carshare) * setting('CAR_COST_BETA_MORE_SENSITIVE') * b_cost,,,,2,,,
+free parking capacity at destination,@np.log(df.free_parking_cap + 0.1) * b_parking_free,,,,1,,,
+# car passenger,,,,,,,,
+travel time OD carpassenger,@(odt_skims['GEDEELDPRIVE_NIETGEDEELD_TIME']) * (1 - df.can_use_cpshare) * b_tt_gedeeldprive,,,,,2,,
+travel time  carpassenger with shared car,@(odt_skims['GEDEELDPRIVE_GEDEELD_TIME']) * df.can_use_cpshare * b_tt_gedeeldprive,,,,,2,,
+operatoring cost car passenger private car,@(odt_skims['GEDEELDPRIVE_NIETGEDEELD_FAR']) * (1 - df.can_use_cpshare)  * b_cost,,,,,2,,
+operatoring cost car passenger shared car,@(odt_skims['GEDEELDPRIVE_GEDEELD_FAR']) * df.can_use_cpshare  * b_cost,,,,,2,,
+# Bike or bike share,,,,,,,,
+travel time bike,@(odt_skims['MICRO15_NIETGEDEELD_TIME']) * (1 - df.can_use_bikeshare) * setting('BIKE_TT_PCT') * b_tt_micro15,,2,,,,,
+travel time bike share,@(odt_skims['MICRO15_GEDEELD_TIME']) * df.can_use_bikeshare * setting('BIKE_TT_PCT') * b_tt_micro15,,2,,,,,
+operating cost bike,@(odt_skims['MICRO15_NIETGEDEELD_FAR']) * (1 - df.can_use_bikeshare) * b_cost,,2,,,,,
+operating cost shared bike,@(odt_skims['MICRO15_GEDEELD_FAR'])* df.can_use_bikeshare * b_cost,,2,,,,,
+Bike not available for long distances 9 miles,@(od_skims.max('MICRO15_NIETGEDEELD_DIST') * (1 - df.can_use_bikeshare)) > 9,,-999,,,,,
+Bike share not available for long distances 9 miles,@(od_skims.max('MICRO15_GEDEELD_DIST') * df.can_use_bikeshare) > 9,,-999,,,,,
+# ebike or ebike share,,,,,,,,
+travel time ebike private,@(odt_skims['MICRO25_NIETGEDEELD_TIME']) * (1 - df.can_use_ebikeshare) * setting('EBIKE_TT_PCT') * df.beta_tt_ebike,,,2,,,,
+travel time ebike share,@(odt_skims['MICRO25_GEDEELD_TIME']) * df.can_use_ebikeshare * setting('EBIKE_TT_PCT') * df.beta_tt_ebike,,,2,,,,
+operating cost private ebike,@(odt_skims['MICRO25_NIETGEDEELD_FAR'])* (1 - df.can_use_ebikeshare) * b_cost,,,2,,,,
+operating cost shared ebike,@(odt_skims['MICRO25_GEDEELD_FAR'])* df.can_use_ebikeshare * b_cost,,,2,,,,
+eBike not available for long distances 15 miles,@(od_skims.max('MICRO25_NIETGEDEELD_DIST') * (1 - df.can_use_ebikeshare)) > 15,,,-999,,,,
+eBike share not available for long distances 15 miles,@(od_skims.max('MICRO25_GEDEELD_DIST') * df.can_use_ebikeshare) > 15,,,-999,,,,
+# DRT (with cost) There is a driver for the agent,,,,,,,,
+travel time DRT,@(odt_skims['GEDEELDONDEMAND_GEDEELD_TIME']) * df.can_use_drt * setting('DRT_TT_BETA_MORE_SENSITIVE') * b_tt_gedeeldondemand * setting('DRT_TT_PCT'),,,,,,2,
+operating cost DRT,@(odt_skims['GEDEELDONDEMAND_GEDEELD_FAR']) * df.can_use_drt * setting('DRT_COST_BETA_MORE_SENSITIVE') * b_cost * setting('DRT_COST_PCT'),,,,,,2,
+# Walk,,,,,,,,
+travel time walk minutes,@odt_skims['MICRO5_NIETGEDEELD_TIME'] * setting('WALK_PENALTY') * (b_tt_micro5_ac_2 * (df.activity_type == 2) + b_tt_micro5_ac_3 * (df.activity_type == 3) + b_tt_micro5_ac_47 * (df.activity_type == 4) + b_tt_micro5_ac_5 * (df.activity_type == 5)  + b_tt_micro5_ac_6 * (df.activity_type == 6) + b_tt_micro5_ac_47 * (df.activity_type == 7)),2,,,,,,
+Walk not available for long distances (3 miles),@od_skims.max('MICRO5_NIETGEDEELD_DIST') > 3,-999,,,,,,
+# PT
+travel time Walk-pt-walk,@(odt_skims['GEDEELDTRADITIONEEL_LOPENLOPEN_GEDEELD_TIME']) * setting('PT_TT_10_PCT_HIGHER') * setting('PT_TT_BETA_MORE_SENSITIVE') * b_tt_gedeeldtraditioneel,,,,,,,2
+operating cost w-pt-w,@(odt_skims['GEDEELDTRADITIONEEL_LOPENLOPEN_GEDEELD_FAR']) * setting('PT_COST_10_PCT_HIGHER') * setting('PT_COST_BETA_MORE_SENSITIVE') * b_cost,,,,,,,2
+no auto and subcription,has_car == 0 & can_use_carshare == 0,,,,-999,,,
+no auto in hh and no subscription,auto_ownership == 0 & can_use_cpshare == 0,,,,,-999,,
+no bike and subscription,has_bike == 0 & can_use_bikeshare == 0,,-999,,,,,
+no ebike and subscription,has_ebike == 0 & can_use_ebikeshare == 0,,,-999,,,,
+no DRT subscription,can_use_drt == 0,,,,,,-999,
+bike_asc,@b_cte_2 * setting('BIKE_PENALTY'),,1,,,,,
+ebike_asc,@b_cte_3 * setting('EBIKE_PENALTY'),,,1,,,,
+car_asc,@b_cte_4 * setting('CAR_PENALTY'),,,,1,,,
+cp_asc,@b_cte_5 * setting('CP_PENALTY'),,,,,1,,
+drt_asc,@b_cte_6* setting('DRT_PENALTY'),,,,,,1,
+L_OV_L asc,@b_cte_7 * setting('PT_PENALTY'),,,,,,,1
+activity by Micro15,@b_activity_type_2_mode_2 * (df.activity_type == 2) + b_activity_type_3_mode_2 * (df.activity_type == 3) + b_activity_type_4_mode_2 * (df.activity_type == 4) + b_activity_type_6_mode_2 * (df.activity_type == 6) + b_activity_type_7_mode_2 * (df.activity_type == 7),,1,,,,,
+activity by Micro25,@b_activity_type_2_mode_3 * (df.activity_type == 2) + b_activity_type_3_mode_3 * (df.activity_type == 3) + b_activity_type_4_mode_3 * (df.activity_type == 4) + b_activity_type_6_mode_3 * (df.activity_type == 6) + b_activity_type_7_mode_3 * (df.activity_type == 7),,,1,,,,
+activity by Private,@b_activity_type_2_mode_4 * (df.activity_type == 2) + b_activity_type_3_mode_4 * (df.activity_type == 3) + b_activity_type_4_mode_4 * (df.activity_type == 4) + b_activity_type_6_mode_4 * (df.activity_type == 6) + b_activity_type_7_mode_4 * (df.activity_type == 7),,,,1,,,
+activity by shared private,@b_activity_type_2_mode_5 * (df.activity_type == 2)  + b_activity_type_3_mode_5 * (df.activity_type == 3) + b_activity_type_4_mode_5 * (df.activity_type == 4) + b_activity_type_6_mode_5 * (df.activity_type == 6) + b_activity_type_7_mode_5 * (df.activity_type == 7),,,,,1,,
+activity by shared on demand,@b_activity_type_2_mode_6 * (df.activity_type == 2)  + b_activity_type_3_mode_6 * (df.activity_type == 3) + b_activity_type_4_mode_6 * (df.activity_type == 4) + b_activity_type_6_mode_6 * (df.activity_type == 6) + b_activity_type_7_mode_6 * (df.activity_type == 7),,,,,,1,
+activity by Shared traditional,@b_activity_type_2_mode_7 * (df.activity_type == 2) + b_activity_type_3_mode_7 * (df.activity_type == 3) +  b_activity_type_4_mode_7 * (df.activity_type == 4) + b_activity_type_6_mode_7 * (df.activity_type == 6) + b_activity_type_7_mode_7 * (df.activity_type == 7),,,,,,,1
+"age <15, age class 1",age < 15,,,,,,,
+"age < 25, age class  2",(age >= 15) & (age < 25),,0.70931884,3.230824844,,-1.282002378,,1.259480041
+"Leeftijd>=25&Leeftijd<45, age class  3",(age >= 25) & (age < 45),,,2.876135998,,-1.336691031,,0.721665262
+"Leeftijd>=45&Leeftijd<65, age class  4",(age >= 45) & (age < 65),,,3.29128071,,-1.302129353,,0.637631617
+"Leeftijd>=65, age class  5 ",age >= 65,,-0.426778973,3.503989859,-0.057293225,-1.092987225,,0.981673143
+DRIVER - no driving license,driving_license == 0,,,,-999,0.448821037,,0.575298254
+"education level 1 - Basisonderwijs, lager onderwijs",education == 1,,,,,,,
+"education level 2 - Lager beroepsonderwijs of vglo, lavo, mavo, mulo, vmbo",education == 2,,,,,,,0.522147272
+"education level 3 - Middelbaar beroepsonderwijs of havo, atheneum, gymnasium, mms, hbs",education == 3,,,,,,,0.577445171
+"education level 4 - HBO, WO",education == 4,,0.36412039,-0.493225556,,,,0.73251582
+education level 5 - andere,education == 5,,,,,,,0.791174733
+gender,male==1,,0.042357822,0.05847246,0.446266443,-0.494220236,,-0.175928042
+household composition 2 (hh no children),hhsize == 2,,0.139092302,0.302978253,-0.543035482,0.525093867,,0.047930872
+household composition 3 (with children),hhsize > 2,,0.191417366,0.242094836,-0.585352332,,,
+hh income 1 - laag (<= p40),income < 45200,,,,,,,
+"hh income 2 - middelmatig (>p40, <=p80)",income< 90400 & income >= 45200,,0.185467531,0.225781892,,0.090711459,,0.216510761
+hh income 3 - hoog (>p80),income >= 90400,,0.445810313,0.279938174,0.074813208,0.088611486,,0.539726914
+household 1 vehicles,auto_ownership == 1,,0.068569724,0.094751204,3.565782332,1.24611141,,-0.318086754
+household 2 vehicles,auto_ownership == 2,,,,4.532310439,1.725494119,,-0.367428246
+household 3 vehicles,auto_ownership == 3,,,,4.888277987,1.55452239,,-0.288222622
+roots_person (Native Dutch),roots_person == 1,,,,,,,
+roots_person migratieachter,roots_person == 2,,,,,,,0.282703793
+roots cat 3 (Niet-westerse allochtoon),roots_person == 3,,-0.814357376,-1.357113249,,,,0.428124385
+Studenten 1 OV-chipkaart met weekabonnement,student_pt == 1,,-0.541102543,,-0.864510118,,,1.021605301
+urbanization by mode 2,@b_urbanized_2_mode_2 * (df.urbanized==2) + b_urbanized_3_mode_2 * (df.urbanized==3) + b_urbanized_4_mode_2 *(df.urbanized==4) + b_urbanized_5_mode_2 *(df.urbanized==5),,1,,,,,
+urbanization by mode 3,@b_urbanized_2_mode_3 * (df.urbanized==2) + b_urbanized_3_mode_3 * (df.urbanized==3) + b_urbanized_4_mode_3 *(df.urbanized==4) + b_urbanized_5_mode_3 *(df.urbanized==5),,,1,,,,
+urbanization by mode 4,@b_urbanized_2_mode_4 * (df.urbanized==2) + b_urbanized_3_mode_4 * (df.urbanized==3) + b_urbanized_4_mode_4 *(df.urbanized==4) + b_urbanized_5_mode_4 *(df.urbanized==5),,,,1,,,
+urbanization by mode 5,@b_urbanized_2_mode_5 * (df.urbanized==2) + b_urbanized_3_mode_5 * (df.urbanized==3) + b_urbanized_4_mode_5 *(df.urbanized==4) + b_urbanized_5_mode_5 *(df.urbanized==5),,,,,1,,
+urbanization by mode 6,@b_urbanized_2_mode_6 * (df.urbanized==2) + b_urbanized_3_mode_6 * (df.urbanized==3) + b_urbanized_4_mode_6 *(df.urbanized==4) + b_urbanized_5_mode_6 *(df.urbanized==5),,,,,,1,
+urbanization by mode 7,@b_urbanized_2_mode_7 * (df.urbanized==2) + b_urbanized_3_mode_7 * (df.urbanized==3) + b_urbanized_4_mode_7 *(df.urbanized==4) + b_urbanized_5_mode_7 *(df.urbanized==5),,,,,,,1
+parking cost at destination for PT mode,@b_parking_tariff_mode_7 * df.parking_cost,,,,,,,1
+# Auto tour mode availability,tour_mode_is_auto,-999,-999,-999,,,-999,-999
+# Walk tour mode availability,tour_mode_is_walk,,-999,-999,-999,,,
+# Bike tour mode availability,tour_mode_is_bike,-999,,-999,-999,-999,-999,-999
+# ebike tour,tour_mode_is_ebike,-999,-999,,-999,-999,-999,-999
+# Walk to Transit tour mode availability,tour_mode_is_walk_transit,,-999,-999,-999,,,
+# DRT tour,tour_mode_is_drt,,-999,-999,-999,,,

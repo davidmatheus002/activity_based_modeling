@@ -1,0 +1,19 @@
+Description,Expression,WALK,BIKE_M,EBIKE_M,CAR_M,CP_M,DRT_M,WALK_PT_WALK,WALK_PT_BIKE,BIKE_PT_WALK,BIKE_PT_BIKE,WALK_CAR_BIKE_ACC,WALK_CAR_BIKE_M,WALK_CAR_BIKE_EGR,BIKE_CAR_WALK_ACC,BIKE_CAR_WALK_M,BIKE_CAR_WALK_EGR,WALK_CAR_EBIKE_ACC,WALK_CAR_EBIKE_M,WALK_CAR_EBIKE_EGR,EBIKE_CAR_WALK_ACC,EBIKE_CAR_WALK_M,EBIKE_CAR_WALK_EGR,WALK_CAR_PT_ACC,WALK_CAR_PT_M,WALK_CAR_PT_EGR,PT_CAR_WALK_ACC,PT_CAR_WALK_M,PT_CAR_WALK_EGR,WALK_CAR_DRT_ACC,WALK_CAR_DRT_M,WALK_CAR_DRT_EGR,DRT_CAR_WALK_ACC,DRT_CAR_WALK_M,DRT_CAR_WALK_EGR,WALK_DRT_PT_ACC,WALK_DRT_PT_M,WALK_DRT_PT_EGR,PT_DRT_WALK_ACC,PT_DRT_WALK_M,PT_DRT_WALK_EGR,WALK_DRT_BIKE_ACC,WALK_DRT_BIKE_M,WALK_DRT_BIKE_EGR,WALK_DRT_EBIKE_ACC,WALK_DRT_EBIKE_M,WALK_DRT_EBIKE_EGR,BIKE_DRT_WALK_ACC,BIKE_DRT_WALK_M,BIKE_DRT_WALK_EGR,EBIKE_DRT_WALK_ACC,EBIKE_DRT_WALK_M,EBIKE_DRT_WALK_EGR,WALK_CP_BIKE_ACC,WALK_CP_BIKE_M,WALK_CP_BIKE_EGR,WALK_CP_EBIKE_ACC,WALK_CP_EBIKE_M,WALK_CP_EBIKE_EGR,WALK_CP_DRT_ACC,WALK_CP_DRT_M,WALK_CP_DRT_EGR,WALK_CP_PT_ACC,WALK_CP_PT_M,WALK_CP_PT_EGR,BIKE_CP_WALK_ACC,BIKE_CP_WALK_M,BIKE_CP_WALK_EGR,EBIKE_CP_WALK_ACC,EBIKE_CP_WALK_M,EBIKE_CP_WALK_EGR,DRT_CP_WALK_ACC,DRT_CP_WALK_M,DRT_CP_WALK_EGR,PT_CP_WALK_ACC,PT_CP_WALK_M,PT_CP_WALK_EGR
+# using ASC of access mode
+bike_asc,@b_cte_2 * setting('BIKE_PENALTY'),,1,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,
+ebike_asc,@b_cte_3 * setting('EBIKE_PENALTY'),,,1,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,1,,,,,,,,
+car_asc,@b_cte_4 * setting('CAR_PENALTY'),,,,1,,,,,,,,0,,,0,,,0,,,0,,,0,,,0,,,0,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+cp_asc,@b_cte_5 * setting('CP_PENALTY'),,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,0,,,0,,,0,,,0,,,0,,,0,,,0,
+drt_asc,@b_cte_6 * setting('DRT_PENALTY'),,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,0,,,0,,,0,,,0,,,0,,,0,,,,,,,,,,,,,,,,,,,,1,,,,,
+W_OV_W asc,@b_cte_7 * setting('PT_PENALTY'),,,,,,,1,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+# using ASC of egress mode
+bike_asc,@b_cte_2 * setting('BIKE_PENALTY'),,1,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,
+ebike_asc,@b_cte_3 * setting('EBIKE_PENALTY'),,,1,,,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,
+car_asc,@b_cte_4 * setting('CAR_PENALTY'),,,,1,,,,,,,,0,,,0,,,0,,,0,,,0,,,0,,,0,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+cp_asc,@b_cte_5 * setting('CP_PENALTY'),,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,0,,,0,,,0,,,0,,,0,,,0,,,0,
+drt_asc,@b_cte_6 * setting('DRT_PENALTY'),,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,0,,,0,,,0,,,0,,,0,,,0,,,,,,,,,,1,,,,,,,,,,,,,,,
+W_OV_W asc,@b_cte_7 * setting('PT_PENALTY'),,,,,,,1,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,

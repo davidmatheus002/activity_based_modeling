@@ -1,0 +1,3 @@
+﻿Description,Target,Expression
+,sovtimemd,"od_skims[('PRIVE_NIETGEDEELD_TIME', 'RD')] * setting('CAR_TT_10_PCT_HIGHER')"
+,sovtimemd_t,"od_skims.reverse(('PRIVE_NIETGEDEELD_TIME', 'RD')) * setting('CAR_TT_10_PCT_HIGHER')"

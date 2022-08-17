@@ -1,0 +1,39 @@
+Description,Target,Expression
+#,, annotate persons table after workplace_location model has run
+,distance_to_work,"np.where(persons.workplace_zone_id>=0,skim_dict.lookup(persons.home_zone_id, persons.workplace_zone_id, 'PRIVE_NIETGEDEELD_DIST'),np.nan)"
+workplace_in_cbd,workplace_in_cbd,"reindex(land_use.area_type, persons.workplace_zone_id) < setting('cbd_threshold')"
+work_zone_area_type,work_zone_area_type,"reindex(land_use.area_type, persons.workplace_zone_id)"
+#,, auto time to work - free flow travel time in both directions. MTC TM1 was MD and MD
+#,,roundtrip_auto_time_to_work
+,_auto_time_home_to_work,"skim_dict.lookup(persons.home_zone_id, persons.workplace_zone_id, ('PRIVE_NIETGEDEELD_TIME', 'RD')) * setting('CAR_TT_10_PCT_HIGHER')"
+,_auto_time_work_to_home,"skim_dict.lookup(persons.workplace_zone_id, persons.home_zone_id, ('PRIVE_NIETGEDEELD_TIME', 'RD')) * setting('CAR_TT_10_PCT_HIGHER')"
+,roundtrip_auto_time_to_work,"np.where(persons.workplace_zone_id>=0,_auto_time_home_to_work + _auto_time_work_to_home,0)"
+#,,_roundtrip_walk_time_to_work
+,_MAX_TIME_TO_WORK,999
+,_WALK_SPEED_MPH,3
+,_walk_time_home_to_work,"60 * skim_dict.lookup(persons.home_zone_id, persons.workplace_zone_id, 'MICRO5_NIETGEDEELD_DIST')/_WALK_SPEED_MPH"
+,_walk_time_work_to_home,"60 * skim_dict.lookup(persons.workplace_zone_id, persons.home_zone_id, 'MICRO5_NIETGEDEELD_DIST')/_WALK_SPEED_MPH"
+,_work_walk_available,(_walk_time_home_to_work > 0) & (_walk_time_work_to_home > 0)
+,_roundtrip_walk_time_to_work,"np.where(_work_walk_available, _walk_time_home_to_work + _walk_time_work_to_home, _MAX_TIME_TO_WORK)"
+#,,_roundtrip_transit_time_to_work
+#,_IVT_SKIM,"skim_dict.get(('GEDEELDTRADITIONEEL_LOPENLOPEN_GEDEELD_TIME', 'RD')) * setting('PT_TT_10_PCT_HIGHER')"
+,_transit_ivt_home_to_work,"skim_dict.lookup(persons.home_zone_id, persons.workplace_zone_id, ('GEDEELDTRADITIONEEL_LOPENLOPEN_GEDEELD_TIME', 'RD'))/100 * setting('PT_TT_10_PCT_HIGHER')"
+,_transit_ivt_work_to_home,"skim_dict.lookup(persons.workplace_zone_id, persons.home_zone_id, ('GEDEELDTRADITIONEEL_LOPENLOPEN_GEDEELD_TIME', 'RD'))/100 * setting('PT_TT_10_PCT_HIGHER')"
+,_work_transit_available,(_transit_ivt_home_to_work > 0) & (_transit_ivt_work_to_home > 0)
+#,_IWAIT_SKIM,"skim_dict.get(('WLK_TRN_WLK_IWAIT', 'RD'))"
+#,_transit_iwait,"_IWAIT_SKIM.get(persons.home_taz, persons.workplace_taz)/100 + _IWAIT_SKIM.get(persons.workplace_taz, persons.home_taz)/100"
+#,_XWAIT_SKIM,"skim_dict.get(('WLK_TRN_WLK_XWAIT', 'RD'))"
+#,_transit_xwait,"_XWAIT_SKIM.get(persons.home_taz, persons.workplace_taz)/100 + _XWAIT_SKIM.get(persons.workplace_taz, persons.home_taz)/100"
+#,_WAUX_SKIM,"skim_dict.get(('WLK_TRN_WLK_WAUX', 'RD'))"
+#,_transit_waux,"_WAUX_SKIM.get(persons.home_taz, persons.workplace_taz)/100 + _WAUX_SKIM.get(persons.workplace_taz, persons.home_taz)/100"
+#,_WACC_SKIM,"skim_dict.get(('WLK_TRN_WLK_WACC', 'RD'))"
+#,_transit_wacc,"_WACC_SKIM.get(persons.home_taz, persons.workplace_taz)/100 + _WACC_SKIM.get(persons.workplace_taz, persons.home_taz)/100"
+#,_WEGR_SKIM,"skim_dict.get(('WLK_TRN_WLK_WEGR', 'RD'))"
+#,_transit_wegr,"_WEGR_SKIM.get(persons.home_taz, persons.workplace_taz)/100 + _WEGR_SKIM.get(persons.workplace_taz, persons.home_taz)/100"
+#,_roundtrip_transit_time_to_work,_transit_ivt_home_to_work + _transit_ivt_work_to_home + _transit_iwait + _transit_xwait + _transit_waux + _transit_wacc + _transit_wegr
+,_roundtrip_transit_time_to_work,_transit_ivt_home_to_work + _transit_ivt_work_to_home
+#,,work_auto_savings_ratio
+,_min_work_walk_transit,"np.where(_work_transit_available, np.minimum(_roundtrip_transit_time_to_work, _roundtrip_walk_time_to_work), _roundtrip_walk_time_to_work)"
+,work_auto_savings,"np.where(persons.is_worker, _min_work_walk_transit - roundtrip_auto_time_to_work, 0)"
+#,,auto savings over walk or transit capped at 120 and normalized to unity
+,work_auto_savings_ratio,"(work_auto_savings / 120.0).clip(-1.0, 1.0)"
