@@ -3,13 +3,13 @@ coef_univ_dist_0_1,0.0,T
 coef_univ_dist_1_2,-2.7914579997720472,F
 coef_univ_dist_2_5,-1.9072399415704275,F
 coef_univ_dist_5_15,-0.7558424348023408,F
-coef_univ_dist_15_up,-0.15358234487270284,F
+coef_univ_dist_15_up,-0.1535823448727028,F
 coef_high_dist_0_1,0.0,T
 coef_high_grade_dist_1_2,-3.5950712067528388,F
 coef_high_grade_dist_2_5,-2.98996812276281,F
 coef_high_dist_5_15,-0.8755517743305391,F
 coef_high_dist_15_up,-0.2868229178115148,F
-coef_grade_dist_0_1,-6.125660695214584,F
+coef_grade_dist_0_1,-6.125660695351285,F
 coef_grade_dist_5_15,-1.855162963289696,F
 coef_grade_dist_15_up,0.0,T
-coef_mode_logsum,0.20134935990872282,F
+coef_mode_logsum,0.20134935986875344,F

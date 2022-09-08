@@ -24,9 +24,9 @@ SPEC_SEGMENTS:
   - NAME: PTYPE_SCHOOL
     PTYPE: 7
     COEFFICIENTS: non_mandatory_tour_frequency_coefficients_PTYPE_SCHOOL.csv
-  - NAME: PTYPE_PRESCHOOL
-    PTYPE: 8
-    COEFFICIENTS: non_mandatory_tour_frequency_coefficients_PTYPE_PRESCHOOL.csv
+#  - NAME: PTYPE_PRESCHOOL
+#    PTYPE: 8
+#    COEFFICIENTS: non_mandatory_tour_frequency_coefficients_PTYPE_PRESCHOOL.csv
 
 annotate_persons:
   SPEC: annotate_persons_nmtf
