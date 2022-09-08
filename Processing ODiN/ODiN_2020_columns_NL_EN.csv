@@ -1,0 +1,210 @@
+column_name,Description,Translation
+op,Nieuwe persoon,New person
+opid,Uniek id voor iedere op,Unique ID for every person
+steekproef,Steekproefindicator,Sample indicator
+mode,Responsmode,Response mode (all Computer Assisted Web Interview)
+hhpers,Aantal personen in huishouden,Number of people in household
+hhsam,Huishoudsamenstelling,Household composition
+hhplop,Plaats op in huishouden tov huishoudkern,Place in household compared to hh nucleus
+hhlft1,Aantal huishoudleden jonger dan 6 jaar,Number of household members younger than 6 years
+hhlft2,Aantal huishoudleden van 6 t/m 11 jaar,Number of household members from 6 to 11 years old
+hhlft3,Aantal huishoudleden van 12 t/m 17 jaar,Number of household members from 12 to 17 years old
+hhlft4,Aantal huishoudleden van 18 jaar of ouder,Number of household members of 18 years or older
+wopc,Postcode woonadres,Postcode Home Address
+wogem,Woongemeente,Municipality of residence
+sted,Stedelijkheidsklasse woongemeente,Type of municipality of residence
+gemgr,Inwoneraantalklasse woongemeente,Inhabitants of municipality of residence
+prov,Provincie woongemeente,Province of residence
+corop,Coropgebied woongemeente,Corop area of residence
+buurtadam,Buurtcombinatie amsterdam,Neighborhood combination Amsterdam
+mra,Metropoolregio amsterdam,Amsterdam metropolitan region
+mrdh,Metropoolregio rotterdam den haag,Rotterdam The Hague metropolitan region
+spl,Stadsregio Parkstad Limburg,Parkstad Limburg City Region
+utr,Provincie Utrecht,Utrecht Province
+geslacht,Geslacht op,Gender
+leeftijd,Leeftijd op,Age
+kleeft,Leeftijdsklasse op,Age class
+herkomst,Migratieachtergrond op,Migration background
+betwerk,Betaald werk op,Paid work
+onbbez,Onbetaalde bezigheid op,Unpaid activity
+maatspart,Maatschappelijke participatie op,Social participation on
+opleiding,Hoogst voltooide opleiding,Educational attainment
+hhbestinkg,Besteedbaar inkomen van het huishouden (10% groepen),Disposable household income (10% groups)
+hhgestinkg,Gestandaardiseerd besteedbaar inkomen van het huishouden (10% groepen),Standardized disposable household income (10% groups)
+hhlaagink,Afwijking lage-inkomensgrens,Deviation of low income limit
+hhsocink,Afwijking sociaal minimum,Deviation Social Minimum
+hhwelvg,Welvaart van het huishouden (10% groepen),Prosperity of the household (10% groups)
+hhrijbewijsau,Aantal autorijbewijzen in huishouden,Number of driving licenses in household
+hhrijbewijsmo,Aantal motorfietsrijbewijzen in huishouden,Number of motorcycle licenses in household
+hhrijbewijsbr,Aantal bromfietsrijbewijzen in huishouden,Number of moped licenses in households
+oprijbewijsau,Op bezit rijbewijs auto,Person owns car driver license
+oprijbewijsmo,Op bezit rijbewijs motorfiets,Person owns motorcycle driver license
+oprijbewijsbr,Op bezit rijbewijs bromfiets,Person owns moped driver license
+hhauto,Aantal personenauto's in huishouden,Number of passenger cars in household
+hhautol,Aantal personenauto’s geleased of op naam van een bedrijf in huishouden,Number of passenger cars leased or in the name of a company in household
+opauto,Aantal personenauto’s op naam op,Number of cars in person's name
+brandstofpa1,Eerste brandstof jongste personenauto op naam huishouden,First fuel type of newest passenger car in household
+xbrandstofpa1,Tweede brandstof jongste personenauto op naam huishouden,Second fuel type of newest passenger car in household
+brandstofepa1,Type elektrische auto jongste personenauto op naam huishouden,Type of electric car newest passenger car in household
+bouwjaarpa1,Bouwjaar jongste personenauto op naam huishouden,Year of manufacture newest passenger car in household
+kbouwjaarpa1,Bouwjaarklasse jongste personenauto op naam huishouden,Year (aggregated) of manufacture newest passenger car in household
+kgewichtpa1,Gewichtsklasse jongste personenauto op naam huishouden,Weight class newest passenger car in household
+tenaampa1,Tenaamstelling jongste personenauto op naam huishouden,Registration of newest passenger car in household
+brandstofpa2,Eerste brandstof een na jongste personenauto op naam huishouden,First fuel type of second newest passenger car in household
+xbrandstofpa2,Tweede brandstof een na jongste personenauto op naam huishouden,Second fuel type of second newest passenger car in household
+brandstofepa2,Type elektrische auto een na jongste personenauto op naam huishouden,Type of electric car second newest passenger car in household
+bouwjaarpa2,Bouwjaar een na jongste personenauto op naam huishouden,Year of manufacture second newest passenger car in household
+kbouwjaarpa2,Bouwjaarklasse een na jongste personenauto op naam huishouden,Year (aggregated) of manufacture second newest passenger car in household
+kgewichtpa2,Gewichtsklasse een na jongste personenauto op naam huishouden,Weight class second newest passenger car in household
+tenaampa2,Tenaamstelling een na jongste personenauto op naam huishouden,Registration of second newest passenger car in household
+brandstofpal,Eerste brandstof leaseauto of personenauto op naam bedrijf in huishouden,First fuel type of leased car or company car in household
+xbrandstofpal,Tweede brandstof leaseauto of personenauto op naam bedrijf in huishouden,Second fuel type of leased car or company passenger car in household
+brandstofepal,Type elektrische auto leaseauto of personenauto op naam bedrijf in huishouden,Type of electric car of leased car or company passenger car in household
+bouwjaarpal,Bouwjaar leaseauto of personenauto op naam bedrijf in huishouden,Year of manufacture leased car or company passenger car in household
+kbouwjaarpal,Bouwjaarklasse leaseauto of personenauto op naam bedrijf in huishouden,Year (aggregated) of manufacture leased car or company passenger car in household
+kgewichtpal,Gewichtsklasse leaseauto of personenauto op naam bedrijf in huishouden,Weight class leased car or company passenger car in household
+hhmotor,Aantal motoren in huishouden,Number of engines in household
+opmotor,Aantal motoren op naam op,Number of engines in person's name
+hhbrom,Aantal bromfietsen in huishouden,Number of bromfiets in household (moped with max speed between 25 and 45 km/h)
+opbrom,Aantal bromfietsen op naam op,Number of bromfiets in person's name
+hhsnor,Aantal snorfietsen op naam huishouden,Number of snorfiets in household (moped with max speed under 25 km/h)
+opsnor,Aantal snorfietsen op naam op,Number of snorfiets in person's name
+hhefiets,Elektrische fiets in huishouden,Electric bicycle in household
+hhbezitvm,Vervoermiddelenbezit huishouden,Household means of transport
+opbezitvm,Vervoermiddelenbezit op,Person means of transport
+fqnefiets,Frequentie gebruik niet-elektrische fiets,Frequency use non-electric bicycle
+fqefiets,Frequentie gebruik elektrische fiets,Frequency Use electric bicycle
+fqbtm,Frequentie gebruik bus,Frequency use bus
+fqtrein,Frequentie gebruik trein,Frequency use train
+fqautob,Frequentie gebruik auto als bestuurder,Frequency use car as driver
+fqautop,Frequentie gebruik auto als passagier,Frequency Use car as a passenger
+fqbrsnor,Frequentie gebruik brom- en/of snorfiets,Frequency of use brom- and/or snorfiets
+ovstkaart,Op bezit studenten ov-chipkaart,Possession of student ov-chipkaart
+jaar,Rapportagejaar,Reporting year
+maand,Rapportagemaand,Reporting month
+week,Rapportageweek,Reporting week
+dag,Rapportagedag,Reporting day
+weekdag,Rapportage weekdag,Reporting day of the week
+feestdag,Rapportagedag is feestdag,Reporting day is a holiday
+weggeweest,Op is weggeweest in nederland,Person left home in the Netherlands
+redennw,Reden niet weggeweest,Reason to not leave home
+redennwz,Niet weggeweest: duur ziekte,Not left: duration of illness
+redennww,Niet weggeweest: type weer,Not left: type of weather
+redennwb,Niet weggeweest: reden verblijf buitenland,Not left: reason for stay abroad
+aantvpl,Aantal reguliere verplaatsingen op in nederland,Number of regular trips in the Netherlands
+aantovvpl,Aantal reguliere ov-verplaatsingen op in nederland,Number of regular public transport trips in the Netherlands
+aantsvpl,Aantal serieverplaatsingen zonder beroepsmatig met vrachtwagen op in nederland,Number of serial trips without professional with truck in the Netherlands
+efiets,Gebruikte type elektrische fiets,Type of used electric bike
+autoeig,Auto op eigen naam gebruikt,Used car in own name
+autohhl,Auto op naam huishoudlid gebruikt,Used car in the name of a member of the household
+autolwg,Leasauto van werkgever gebruikt,Used leased car from employer
+autolpl,Leasauto via private lease gebruikt,Used leased car from private lease
+autobed,Auto op naam van een bedrijf gebruikt,Used car in the name of a company
+autodorg,Deelauto van een organisatie gebruikt,Used shared car from an organization
+autodpart,Deelauto van particulier via online platform gebruikt,Used shared car from a private online platform
+autodbek,Deelauto met vrienden/bekenden gebruikt,Used shared car with friends/aquaintances
+autoleen,Leenauto of geleende auto gebruikt,Used loan car or borrowed car
+autohuur,Huurauto gebruikt,Used rental car
+autoand,Andere soort auto gebruikt,Used another type of car
+byzdag,Bijzonderheden op rapportagedag,Particularities on reporting day
+byzadr,Bijzonderheid: andere adressen,Particularity: Other addresses
+byzvvm,Bijzonderheid: andere vervoermiddelen,Particularity: other means of transport
+byztyd,Bijzonderheid: andere tijdstippen,Particularity: other times
+byzduur,Bijzonderheid: andere reisduur,Particularity: other travel time
+byzroute,Bijzonderheid: andere route,Particularity: other route
+byzreden,Reden ander reispatroon,Reason other travel pattern
+reisduurop,Totale reisduur reguliere verplaatsingen op in nederland (in minuten),Total travel time regular trips in the Netherlands (in minutes)
+afstandop,Totaal afgelegde afstand reguliere verplaatsingen op in nederland (in hectometer,Total distance traveled on regular trips on the Netherlands (in hectometers)
+afstandsop,Totaal afgelegde afstand serieverplaatsingen op in nederland (in hectometers),Total distance traveled on serial trips in the Netherlands (in hectometers)
+verpl,Nieuwe verplaatsing,Niew trip
+verplid,Uniek id voor iedere verplaatsing,Unique ID for every trip
+verplnr,Verplaatsingsnummer,Trip number
+toer,Vertrekpunt verplaatsing is aankomstpunt,Departure point of trip is arrival point (tour)
+aantrit,Aantal ritten verplaatsing,Number of trip legs
+doel,Bestemming/doel,Destination / purpose
+motiefv,Motief,Motive
+kmotiefv,Klassenindeling motief,Motive class
+meerwink,Meerdere winkels bezocht,Several stores visited
+aardwerk,Aard werkzaamheden,Nature work
+vertloc,Vertreklocatie verplaatsing,Trip departure location
+vertgeb,Vertrekgebied,Departure area
+vertpc,Postcode vertrekpunt,Postal code Departure point
+vertpcbl,Postcode vertrekpunt in het buitenland,Postal code Departure point abroad
+vertgem,Vertrekgemeente,Departure municipality
+vertprov,Vertrekprovincie,Departure province
+vertcorop,Coropgebied vertrekpunt,Corop area Departure point
+vertmra,Metropoolregio amsterdam vertrekpunt,Amsterdam metropolitan region departure point
+vertmrdh,Metropoolregio rotterdam den haag vertrekpunt,Rotterdam The Hague metropolitan region departure point
+vertspl,Stadsregio Parkstad Limburg vertrekpunt,Parkstad Limburg city region departure point
+vertutr,Provincie Utrecht vertrekpunt,Utrecht Province departure point 
+aankgeb,Aankomstgebied,Arrival area
+aankpc,Postcode aankomstpunt,Postcode Arrival point
+aankpcbl,Postcode aankomstpunt in het buitenland,Postcode Arrival point abroad
+aankgem,Aankomstgemeente,Arrival municipality
+aankprov,Aankomstprovincie,Arrival province
+aankcorop,Coropgebied aankomstpunt,COROP area Arrival point
+aankmra,Metropoolregio amsterdam aankomstpunt,Amsterdam metropolitan region arrival point
+aankmrdh,Metropoolregio rotterdam den haag aankomstpunt,Rotterdam The Hague metropolitan region arrival point
+aankspl,Stadsregio Parkstad Limburg aankomstpunt,Parkstad Limburg city region arrival point
+aankutr,Provincie Utrecht aankomstpunt,Utrecht Province arrival point 
+pcg,Nederlandse postcode grensovergang,Dutch post code border crossing
+gemg,Nederlandse gemeente grensovergang,Dutch municipality of border crossing
+pcblg,Buitenlandse postcode grensovergang,Foreign zip code border crossing
+afstv,Verplaatsingsafstand in nederland (in hectometers),Trip distance in the Netherlands (in hectometers)
+kafstv,Verplaatsingsafstandsklasse in nederland,Trip distance class in the Netherlands
+hvm,Hoofdvervoermiddel verplaatsing,Main transport mode trip
+hvmrol,Rol in het hoofdvervoermiddel,Role in the main transport mode
+khvm,Hoofdvervoermiddelklasse verplaatsing,Main transport class trip
+vertuur,Vertrekuur verplaatsing,Departure time trip
+vertmin,Vertrekminuut verplaatsing,Departure minute trip
+kverttijd,Vertrektijdklasse,Departure time class
+aankuur,Aankomstuur verplaatsing,Arrival time trip
+aankmin,Aankomstminuut verplaatsing,Arrival minute trip
+reisduur,Reisduur in nederland (in minuten),Travel time in the Netherlands (in minutes)
+kreisduur,Reisduurklasse in nederland,Travel time class in the Netherlands
+actduur,Activiteitsduur (in minuten),Activity duration (in minutes)
+kind6,Kind(eren) jonger dan 6 mee,Child (ren) younger than 6
+volgwerk,Opeenvolging werkverplaatsingen,Sequence of work trips
+saantadr,Aantal bezochte adressen serieverplaatsing,Number of visited addresses Serial trips
+sdezplts,Alle adressen in dezelfde plaats,All addresses in the same city
+splaats1,Plaatsnaam 1,City name 1
+splaats2,Plaatsnaam 2,City name 2
+splaats3,Plaatsnaam 3,City name 4
+splaats4,Plaatsnaam 4,City name 4
+splaats5,Plaatsnaam 5,City name 5
+afsts,Afstand serieverplaatsing in nederland (in hectometers),Distance serial trips in the Netherlands (in hectometers)
+afstsbl,Afstand serieverplaatsing in het buitenland (in hectometers),Distance serial trips abroad (in hectometers)
+svvm1,Eerste vervoermiddel serieverplaatsing,First transport mode Serial trips
+svvm2,Tweede vervoermiddel serieverplaatsing,Second transport mode Serial trips
+svvm3,Derde vervoermiddel serieverplaatsing,Third transport mode Serial trips
+svvm4,Vierde vervoermiddel serieverplaatsing,Fourth transport mode Serial trips
+sbeguur,Beginuur serie,Start hour series
+sbegmin,Beginminuut serie,Start minute series
+seinduur,Einduur serie,End hour series
+seindmin,Eindminuut serie,End minute series
+corrverpl,Correctie verplaatsingen naar ritten,Correction trips to legs
+gehblver,Geheel buitenlandse verplaatsing verwijderd,Completely foreign trip
+rit,Nieuwe rit,New leg
+ritid,Uniek id voor iedere rit,Unique ID for every leg
+ritnr,Ritnummer,Leg number
+afstr,Ritafstand in nederland (in hectometers),Leg distance in the Netherlands (in hectometers)
+afstrbl,Ritafstand in het buitenland (in hectometers),Leg distance abroad (in hectometers)
+kafstr,Ritafstandsklasse in nederland,Leg distance class in the Netherlands
+rvm,Ritvervoermiddel,Leg transport mode
+rvmrol,Rol in het ritvervoermiddel,Role in the transport mode
+raantin,Aantal inzittenden auto,Number of passengers in car
+krvm,Ritvervoermiddelklasse,Leg transportation mode class
+rvertuur,Ritvertrekuur,Leg departure hour
+rvertmin,Ritvertrekminuut,Leg departure minute
+raankuur,Ritaankomstuur,Leg arrival hour
+raankmin,Ritaankomstminuut,Leg arrival minute
+rreisduur,Ritreisduur in nederland (in minuten),Leg travel time in the Netherlands (in minutes)
+rreisduurbl,Ritreisduur in het buitenland (in minuten),Leg travel time abroad (in minutes)
+rvertstat,Vertrekstation treinrit,Train leg departure station
+raankstat,Aankomststation treinrit,Train leg arrival station
+rtsamen,Groepsgrootte reisgezelschap trein,Group size Travel group train
+rcorrsnelh,Correctie vanwege snelheid,Correction due to speed
+rvliegver,Vliegtuigrit verwijderd,Airplane ride removed
+factorh,Weegfactor huishouden,Weighing factor household
+factorp,Weegfactor persoon,Weighing factor person
+factorv,Weegfactor verplaatsing,Weighing factor trip

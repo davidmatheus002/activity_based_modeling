@@ -1,0 +1,33 @@
+﻿Table,Field,Assumption
+Households,home_zone_id,Mapped from PC4 to MRDH zone by using  overlapping sections and choosing that with most residents.
+Households,workers,"All adults in household are workers, unless the respondent is known to be unemployed, in which case it is all adults - 1."
+Households,income,"Corresponds with the median income of the income decile from which the respondent belongs, as obtained from CBS data."
+Households,HHT,Mapped to ActivitySim requirements based on household residents and gender of the respondent.
+Persons,home_zone_id,Mapped from PC4 to MRDH zone by using  overlapping sections and choosing that with most residents.
+Persons,workplace_zone_id,"Obtained by deducing from trip purposes and destinations, and then mapped to MRDH zones by using overlaps and choosing the area with the most jobs"
+Persons,school_zone_id,"Obtained by deducing from trip purposes and destinations, and then mapped to MRDH zones by using overlaps and choosing the area with the most students."
+Persons,pemploy,People who do not perform paid work but still perform work trips are assumed to work part time.
+Persons,pstudent,Based on age and possession of student public transport card.
+Persons,ptype,"Based on pemploy, pstudent, and age."
+Persons,education,"Children under 12 years of age are still in primary school, while older children have finished it."
+Persons,has_bike,Based on frequency of use of bike.
+Persons,has_ebike,Based on frequency of use of ebike.
+Persons,num_joint_tours,"Equals zero for all persons, very little information included in the survey."
+Tours,destination,Mapped to MRDH zones by using overlaps and choosing the area with the most relevant zone attribute depending on purpose.
+Tours,origin,Mapped to MRDH zones by using overlaps and choosing the area with the most relevant zone attribute depending on purpose.
+Tours,tour_id,"Tours are assumed to be home-based, subtours are work-based."
+Tours,parent_tour_id,"Tours are assumed to be home-based, subtours are work-based."
+Tours,outbound,"Trips that take place before reaching the tour destination are outbound, other trips are inbound."
+Tours,tour_type,"Defined by the first trip purpose to appear on the following list: work, university, school, escort, shopping, other maintenance, eat out, social, other discretionary, business, and home."
+Tours,tour_type,"For subtours, the tour type is ""at work""."
+Trips,destination,Mapped to MRDH zones by using overlaps and choosing the area with the most relevant zone attribute depending on purpose.
+Trips,origin,Mapped to MRDH zones by using overlaps and choosing the area with the most relevant zone attribute depending on purpose.
+Trips,tour_id,"Tours are assumed to be home-based, subtours are work-based."
+Trips,parent_tour_id,"Tours are assumed to be home-based, subtours are work-based."
+Trips,purpose,University trips are assumed to take place if the survey purpose is school and the respondent has a student public transport card.
+Trips,purpose,"When the trip purpose is ""touring/hiking"" or ""other reason"", they are randomly swapped for eating out or social."
+Trips,purpose,"For trips in subtours, trips that are not for business, to return to the office, or eating out, are mapped to be maintenance tours."
+Trips,trip_mode,"Speedpedelecs, bromfiets and snorfiets mapped to ebikes."
+Trips,trip_mode,"Skates, rollerblades, and scootersmapped to bikes."
+Trips,trip_mode,Handicapped transports mapped to walking.
+Trips,trip_mode,"Other transport modes, motorized and non-motorized, are mapped to cars and walking respectively."
